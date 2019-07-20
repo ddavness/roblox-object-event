@@ -12,10 +12,12 @@
     ObjectEvents are meant to be as versatile as possible, and resemble the Roblox's syntax, while also adding extra features.
 */
 interface ObjectEvent {
+    constructor(): ObjectEvent 
+    
     /*
         Exposes all the active (connected) ObjectEventConnections plugged in the event.
     */
-    SubscribedConnections: ObjectEventConnection[];
+    readonly SubscribedConnections: ObjectEventConnection[];
 
     /*
         Connects a function, returns a connection.
@@ -35,6 +37,7 @@ interface ObjectEvent {
     Fire(...args:any[]): void;
 }
 
+// Connection interface won't have a constructor because the only legit way is via the :Connect() function
 interface ObjectEventConnection {
     /*
         The function that will be called when the event fires.
@@ -61,3 +64,5 @@ interface ObjectEventConnection {
     */
     Reconnect(): void;
 }
+
+export {ObjectEvent}
