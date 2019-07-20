@@ -1,6 +1,8 @@
-⚠️ **Still a WIP project!** ⚠️ ️
+<p align="center"><b>⚠️ Still a WIP project! ⚠️ ️</b></p>
 
-# @rbxts/object-event
+<h1><p align="center">@rbxts/object-event</p></h1>
+
+<p align="center"><a href="https://badge.fury.io/js/%40rbxts%2Fobject-event"><img src="https://badge.fury.io/js/%40rbxts%2Fobject-event.svg" alt="npm version" height="18"></a></p>
 
 This NPM Package for Roblox-TS allows developers to implement custom Events for custom classes, without resorting to `BindableEvents`.
 

@@ -23,7 +23,10 @@
   ],
   "author": "davness",
   "license": "MIT",
-  "homepage": "https://github.com/ddavness/object-event/blob/master/README.md",
+  "homepage": "https://github.com/ddavness/object-event",
+  "bugs": {
+    "url": "https://github.com/ddavness/object-event/issues"
+  },
 	"publishConfig": {
 		"access": "public"
 	}
