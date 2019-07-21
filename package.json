@@ -1,6 +1,6 @@
 {
   "name": "@rbxts/object-event",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "Allows for custom events to be created for custom OOP implementations. Attempts to reproduce Roblox's syntax as closely as possible while adding more features.",
   "main": "init.lua",
   "types": "index.d.ts",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ddavness/object-event.git"
+    "url": "https://github.com/ddavness/RBXTS-object-event.git"
   },
   "keywords": [
     "Roblox",
@@ -23,9 +23,9 @@
   ],
   "author": "davness",
   "license": "MIT",
-  "homepage": "https://github.com/ddavness/object-event",
+  "homepage": "https://github.com/ddavness/RBXTS-object-event",
   "bugs": {
-    "url": "https://github.com/ddavness/object-event/issues"
+    "url": "https://github.com/ddavness/RBXTS-object-event/issues"
   },
 	"publishConfig": {
 		"access": "public"
