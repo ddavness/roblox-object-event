@@ -6,7 +6,51 @@
 
 This NPM Package for Roblox-TS allows developers to implement custom Events for custom classes, without resorting to `BindableEvents`.
 
-This should be particularly useful for projects that heavily rely on the OOP paradigm for libraries and other game components. 
+This should be particularly useful for projects that heavily rely on the OOP paradigm for libraries and other game components.
+
+```ts
+// Module.ts
+
+import ObjectEvent from "@rbxts/object-event"
+
+class MyClass {
+    public ThisHappening = new ObjectEvent()
+}
+
+let sample = new MyClass()
+let connection = sample.ThisHappening.Connect(function(num: number){
+    print(`Connected from Module: ${tostring(sample.ThisHappening.Wait())}`)
+});
+
+(async () => {
+    wait(0.5)
+    print(`Active Connections: ${tostring(sample.ThisHappening.SubscribedConnections.size())}`)
+    sample.ThisHappening.Fire(1)
+    connection.Disconnect()
+    print(`Active Connections: ${tostring(sample.ThisHappening.SubscribedConnections.size())}`)
+    sample.ThisHappening.Fire(2)
+    connection.Reconnect()
+    print(`Active Connections: ${tostring(sample.ThisHappening.SubscribedConnections.size())}`)
+    sample.ThisHappening.Fire(3)
+})()
+export {sample}
+```
+
+(On another script)
+
+```ts
+// Waiter.server.ts
+
+import {sample} from "./Module"
+
+sample.ThisHappening.Connect(() => {
+    print(`Connected from Waiter: ${tostring(sample.ThisHappening.Wait())}`)
+})
+
+print(`Waited: ${tostring(sample.ThisHappening.Wait())}`)
+
+export {}
+```
 
 ## Current Features:
 
@@ -18,6 +62,7 @@ This should be particularly useful for projects that heavily rely on the OOP par
 
 - Custom features;
 - - Reconnecting a disconnected connection without having to make a new one (ability to reuse connections).
+- - Reading all active connections for a given event.
 
 ## Goals:
 

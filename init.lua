@@ -37,7 +37,7 @@ do
     end;
 
     function ObjectEvent:Connect(f)
-        return EventConnection.new(f, self)
+        return ObjectEventConnection.new(f, self)
     end
 
     function ObjectEvent:Wait()
@@ -51,13 +51,13 @@ do
         -- Activate all listeners
         for _, c in pairs(self.SubscribedConnections) do
             coroutine.resume(coroutine.create(function()
-                connection.Listener(args)
+                c.Listener(unpack(args))
             end))
         end
 
         -- Resume all yielding threads on :Wait()
         for _, t in pairs(self.YieldQueue) do
-            coroutine.resume(thread, args)
+            coroutine.resume(t, unpack(args))
         end
 
         -- Reset the yielding queue.
@@ -114,4 +114,4 @@ do
     end
 end
 
-return {ObjectEvent}
+return ObjectEvent
