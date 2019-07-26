@@ -11,17 +11,17 @@
     An ObjectEvent is a custom implementation inspired on the Roblox Signal API for user-defined objects.
     ObjectEvents are meant to be as versatile as possible, and resemble the Roblox's syntax, while also adding extra features.
 */
-interface ObjectEvent { 
+interface ObjectEvent<$funcType = [number, number]> { 
     /**
         Exposes all the active (connected) ObjectEventConnections plugged in the event.
     */
-    readonly SubscribedConnections: ObjectEventConnection[];
+    readonly SubscribedConnections: ObjectEventConnection<$funcType>[];
 
     /**
         Connects a function, returns a connection.
         @param fn Any function you wish to connect. Must return void.
     */
-    Connect(fn: (...all:any[]) => void): ObjectEventConnection;
+    Connect(fn: ($funcType) => void): ObjectEventConnection<$funcType>;
 
     /**
         Halts the thread this method is called within until the event is fired.
@@ -36,16 +36,16 @@ interface ObjectEvent {
 }
 
 // Connection interface won't have a constructor because the only legit way is via the :Connect() function
-interface ObjectEventConnection {
+interface ObjectEventConnection<funcType> {
     /**
         The function that will be called when the event fires.
     */
-    readonly Listener: (...all:any[]) => void;
+    readonly Listener: (funcType) => void;
 
     /**
         The event this connection is connected to.
     */
-    readonly Event: ObjectEvent;
+    readonly Event: ObjectEvent<funcType>;
 
     /**
         Returns whether the function is connected or not.
@@ -63,5 +63,5 @@ interface ObjectEventConnection {
     Reconnect(): void;
 }
 
-declare const ObjectEvent: new() => ObjectEvent
+declare const ObjectEvent: new<$arguments>() => ObjectEvent<$arguments>
 export = ObjectEvent;
