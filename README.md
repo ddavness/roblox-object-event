@@ -22,7 +22,7 @@ let connection = sample.ThisHappening.Connect(function(num: number){
     print(`Connected from Module: ${tostring(sample.ThisHappening.Wait())}`)
 });
 
-(async () => {
+Promise.spawn(() => {
     wait(0.5)
     print(`Active Connections: ${tostring(sample.ThisHappening.SubscribedConnections.size())}`)
     sample.ThisHappening.Fire(1)
@@ -32,7 +32,7 @@ let connection = sample.ThisHappening.Connect(function(num: number){
     connection.Reconnect()
     print(`Active Connections: ${tostring(sample.ThisHappening.SubscribedConnections.size())}`)
     sample.ThisHappening.Fire(3)
-})()
+})
 export {sample}
 ```
 
