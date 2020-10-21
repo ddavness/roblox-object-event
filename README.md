@@ -1,5 +1,3 @@
-<p align="center"><b>⚠️ Still a WIP project! ⚠️ ️</b></p>
-
 <h1><p align="center">@rbxts/object-event</p></h1>
 
 <p align="center"><a href="https://badge.fury.io/js/%40rbxts%2Fobject-event"><img src="https://badge.fury.io/js/%40rbxts%2Fobject-event.svg" alt="npm version" height="18"></a></p>
@@ -8,59 +6,66 @@ This NPM Package for Roblox-TS allows developers to implement custom Events for 
 
 This should be particularly useful for projects that heavily rely on the OOP paradigm for libraries and other game components.
 
+The module can be used both in pure Lua(u) scripts (via Rojo or any other way) or with Roblox-TS (includes compile-time type-checking).
+
+## Example
+
 ```ts
-// Module.ts
+/////// Module.ts ///////
 
 import ObjectEvent from "@rbxts/object-event"
 
-class MyClass {
-    public ThisHappening = new ObjectEvent()
-}
+const event = new ObjectEvent<[number, String, Vector3]>()
 
-let sample = new MyClass()
-let connection = sample.ThisHappening.Connect(function(num: number){
-    print(`Connected from Module: ${tostring(sample.ThisHappening.Wait())}`)
-});
-
-Promise.spawn(() => {
-    wait(0.5)
-    print(`Active Connections: ${tostring(sample.ThisHappening.SubscribedConnections.size())}`)
-    sample.ThisHappening.Fire(1)
-    connection.Disconnect()
-    print(`Active Connections: ${tostring(sample.ThisHappening.SubscribedConnections.size())}`)
-    sample.ThisHappening.Fire(2)
-    connection.Reconnect()
-    print(`Active Connections: ${tostring(sample.ThisHappening.SubscribedConnections.size())}`)
-    sample.ThisHappening.Fire(3)
-})
-export {sample}
-```
-
-(On another script)
-
-```ts
-// Waiter.server.ts
-
-import {sample} from "./Module"
-
-sample.ThisHappening.Connect(() => {
-    print(`Connected from Waiter: ${tostring(sample.ThisHappening.Wait())}`)
+event.Connect((id, msg, position) => {
+    // We can safely assume that:
+    // id is a number
+    // msg is a string
+    // position is a Vector3
 })
 
-print(`Waited: ${tostring(sample.ThisHappening.Wait())}`)
+export event
+
+
+/////// Waiter.server.ts ///////
+
+import {event} from "./Module"
+
+event(10, "oof", new Vector3(1, 2, 3))  // all good
+event(10, "oof")                        // will not compile!
 
 export {}
 ```
 
+To allow all kinds of arguments, of any number:
+
+```ts
+let event = new ObjectEvent<[...unknown]>()
+```
+
+## `ObjectEvent` API
+
+- `Connect(f)` - `f` is a function that takes the arguments typed accordingly and returns `void`. Returns an `ObjectEventConnection`
+- `Wait()` - yields the thread until the event is fired. Returns the values typed accordingly.
+- `Fire(...)` - fires the event. Arguments must be the same number and type of the event.
+- `SubscribedConnection` - an array of `ObjectEventConnection`s with all the connections currently listening to the event.
+
+## `ObjectEventConnection` API
+
+- `Disconnect()` - disconnects from the event
+- `Reconnect()` - reverts a disconnection
+- `IsConnected()` - returns `true` if the connection is listening to the event (this is, not Disconnect()'ed), `false` otherwise.
+- `Event` - the `ObjectEvent` associated with this connection
+- `Listener` - the function associated with this connection
+
 ## Current Features:
 
-- Standard Roblox Event Feature Set:
-- - Connecting;
+- **Standard Roblox Event Feature Set:**
+- - Connecting to an event;
 - - Disconnecting a connection;
-- - Yield thread until event is fired;
+- - Yielding a thread until the event is fired;
 - - Passing arguments through the functions;
-
-- Custom features;
+- **Custom features:**
 - - Reconnecting a disconnected connection without having to make a new one (ability to reuse connections).
 - - Reading all active connections for a given event.
 
@@ -70,5 +75,3 @@ export {}
 - Roblox-like syntax while keeping a minimum of decency for TypeScript syntax;
 - Code readability for OOP implementations.
 - Complement Roblox's implementation with extra (useful) features.
-
-*Not-A-JavaScript-Framework.*
