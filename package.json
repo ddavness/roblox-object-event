@@ -19,7 +19,8 @@
     "Connection"
   ],
   "files": [
-    "out",
+    "*.lua",
+    "*.d.ts",
   ],
   "author": "davness",
   "license": "MIT",
