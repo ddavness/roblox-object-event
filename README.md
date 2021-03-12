@@ -31,8 +31,8 @@ export event
 
 import {event} from "./Module"
 
-event(10, "oof", new Vector3(1, 2, 3))  // all good
-event(10, "oof")                        // will not compile!
+event.Fire(10, "oof", new Vector3(1, 2, 3))  // all good
+event.Fire(10, "oof")                        // will not compile!
 
 export {}
 ```
