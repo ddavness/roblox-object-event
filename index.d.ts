@@ -26,7 +26,7 @@ interface ObjectEvent<T extends [...any]> {
     /**
         Halts the thread this method is called within until the event is fired.
     */
-    Wait(): [...T];
+    Wait(): LuaTuple<[...T]>;
 
     /**
         Fires the event, resuming all threads stopped with .Wait() and calling all connections.
