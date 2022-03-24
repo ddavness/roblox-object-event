@@ -7,6 +7,6 @@ realm = "shared"
 authors = ["David Duque <david@duqued.net>"]
 license = "MIT"
 exclude = ["*"]
-include = ["init.lua", "LICENSE"]
+include = ["init.lua", "LICENSE", "wally.toml"]
 
 [dependencies]
