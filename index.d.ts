@@ -7,11 +7,8 @@
     Describes types for the package.
 */
 
-/**
-    An ObjectEvent is a custom implementation inspired on the Roblox Signal API for user-defined objects.
-    ObjectEvents are meant to be as versatile as possible, and resemble the Roblox's syntax, while also adding extra features.
-*/
-interface ObjectEvent<T extends [...any]> {
+// Replicates the same interface of the RBXScriptSignal class (aka built-in-events)
+interface RBXScriptSignalLike<T extends [...any]> {
     /**
         Exposes all the active (connected) ObjectEventConnections plugged in the event.
     */
@@ -27,6 +24,16 @@ interface ObjectEvent<T extends [...any]> {
         Halts the thread this method is called within until the event is fired.
     */
     Wait(): LuaTuple<[...T]>;
+}
+
+/**
+    An ObjectEvent is a custom implementation inspired on the Roblox Signal API for user-defined objects.
+    ObjectEvents are meant to be as versatile as possible, and resemble the Roblox's syntax, while also adding extra features.
+
+    Can be used like a built-in event (event.Connect(), event.Wait()) or as a BindableEvent (event.Event.Connect(), event.Fire())
+*/
+interface ObjectEvent<T extends [...any]> {
+    readonly Event: RBXScriptSignalLike<T>
 
     /**
         Fires the event, resuming all threads stopped with .Wait() and calling all connections.
