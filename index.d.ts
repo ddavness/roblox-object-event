@@ -36,6 +36,22 @@ interface ObjectEvent<T extends [...any]> {
     readonly Event: RBXScriptSignalLike<T>
 
     /**
+        Exposes all the active (connected) ObjectEventConnections plugged in the event.
+    */
+    readonly SubscribedConnections: ObjectEventConnection<T>[];
+
+    /**
+        Connects a function, returns a connection.
+        @param fn Any function you wish to connect. Must return void.
+    */
+    Connect(fn: (...all: [...T]) => void): ObjectEventConnection<T>;
+
+    /**
+        Halts the thread this method is called within until the event is fired.
+    */
+    Wait(): LuaTuple<[...T]>;
+
+    /**
         Fires the event, resuming all threads stopped with .Wait() and calling all connections.
         @param args Any values you wish to pass to the connections and threads.
      */

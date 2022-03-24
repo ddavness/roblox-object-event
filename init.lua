@@ -46,6 +46,7 @@ ObjectEvent.__index = ObjectEvent
 function ObjectEvent.new()
 	local self = setmetatable({}, ObjectEvent)
 	self.Event = RBXScriptSignalLike.new()
+	self.SubscribedConnections = self.Event.SubscribedConnections
 
 	return self
 end

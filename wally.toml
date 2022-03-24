@@ -1,0 +1,11 @@
+[package]
+name = "davness/object-event"
+version = "1.0.3"
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+authors = ["David Duque <david@duqued.net>"]
+license = "MIT"
+exclude = ["*"]
+include = ["init.lua", "LICENSE"]
+
+[dependencies]
