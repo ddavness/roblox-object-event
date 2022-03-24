@@ -11,18 +11,20 @@
 local ObjectEvent, ObjectEventConnection
 
 ObjectEvent = setmetatable({}, {
-    __tostring = function() return "ObjectEvent"; end
+    __tostring = function()
+        return "ObjectEvent"
+    end
 })
 
 ObjectEvent.__index = ObjectEvent
 
-function ObjectEvent.new(...)
+function ObjectEvent.new()
     local self = setmetatable({}, ObjectEvent)
     self.SubscribedConnections = {}
     self.YieldQueue = {}
 
     return self
-end;
+end
 
 function ObjectEvent:Connect(f)
     return ObjectEventConnection.new(f, self)
@@ -38,14 +40,14 @@ function ObjectEvent:Fire(...)
 
     -- Activate all listeners
     for _, c in pairs(self.SubscribedConnections) do
-        coroutine.resume(coroutine.create(function()
+        task.spawn(function()
             c.Listener(unpack(args))
-        end))
+        end)
     end
 
     -- Resume all yielding threads on :Wait()
     for _, t in pairs(self.YieldQueue) do
-        coroutine.resume(t, unpack(args))
+        task.spawn(t, unpack(args))
     end
 
     -- Reset the yielding queue.
