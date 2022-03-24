@@ -48,7 +48,8 @@ let event = new ObjectEvent<[...unknown]>()
 - `Connect(f)` - `f` is a function that takes the arguments typed accordingly and returns `void`. Returns an `ObjectEventConnection`
 - `Wait()` - yields the thread until the event is fired. Returns the values typed accordingly.
 - `Fire(...)` - fires the event. Arguments must be the same number and type of the event.
-- `SubscribedConnection` - an array of `ObjectEventConnection`s with all the connections currently listening to the event.
+- `Event` - an `RBXScriptSignal`-like interface supporting the `Connect()` and `Wait()`, just in case you prefer to use it as a BindableEvent.
+- `SubscribedConnections` - an array of `ObjectEventConnection`s with all the connections currently listening to the event.
 
 ## `ObjectEventConnection` API
 
